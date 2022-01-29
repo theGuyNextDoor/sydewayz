@@ -36,23 +36,6 @@ module.exports = {
           };
           ticketArr = [...ticketArr, ticketData];
         });
-        console.log('here is the ticketArr: ', ticketArr);
-
-        // DELETE WHEN ABOVE IS TESTED FOR MORE THAN ONE TICKET
-        // for (let i = 0; i < tickets.length; i += 1) {
-        //   const { recipient, type, subject, description, priority, status } = tickets[i];
-        //   // console.log('ticket', i, results[i]);
-        //   const ticket = {
-        //     recipient,
-        //     type,
-        //     subject,
-        //     description,
-        //     priority,
-        //     status,
-        //   };
-        //   // console.log('Ticket', i, ticket);
-        //   ticketArr = [...ticketArr, ticket];
-        // }
         res.status(200).send(ticketArr);
       })
       .catch((err) => {
