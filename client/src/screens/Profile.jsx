@@ -98,26 +98,36 @@ function Profile({ navigation }) {
     setModalView(view);
   };
 
+  // LOOK FOR BETTER METHOD HANDELING THIS
+  const displayTicket = openTickets.map((ticket, index) => {
+    console.log('SCREENS Profile.jsx - display ticket:\n', ticket); //DELETE ME
+    const { createdAt, description, status } = ticket;
+    return (
+      <View key={index} style={styles.ticketBox}>
+        <View style={styles.schedule}>
+          <Text style={theme.darkTxt}>{createdAt}</Text>
+          <Text style={theme.darkTxt}>{status}</Text>
+        </View>
+
+        <View style={styles.descriptionBox}>
+          <View>
+            <Text style={theme.darkTxt}>agent</Text>
+          </View>
+
+          <View style={styles.description}>
+            <Text>{ticket.description}</Text>
+          </View>
+
+        </View>
+      </View>
+    );
+  });
+
   return (
-    <SafeAreaView style={theme.wrapper}>
+    <View style={theme.wrapper}>
       <View style={styles.ticketContainer}>
         <Text style={theme.backgroundTxt}>next appointment</Text>
-        <View style={styles.ticketBox}>
-          <View style={styles.schedule}>
-            <Text style={theme.darkTxt}>Schedule date</Text>
-            <Text style={theme.darkTxt}>time</Text>
-          </View>
-
-          <View style={styles.descriptionBox}>
-            <View>
-              <Text style={theme.darkTxt}>agent</Text>
-            </View>
-
-            <View style={styles.description}>
-              <Text>This is data is mock data for the description text field</Text>
-            </View>
-          </View>
-        </View>
+        {displayTicket[0]}
       </View>
 
       <View style={styles.taskContainer}>
@@ -155,7 +165,7 @@ function Profile({ navigation }) {
         </SafeAreaView>
       </Modal>
 
-    </SafeAreaView>
+    </View>
   );
 }
 

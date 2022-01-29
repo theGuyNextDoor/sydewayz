@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { SafeAreaView } from 'react-native';
 import { useUser } from '../UserManager';
 import Profile from './Profile';
 import Tickets from './Tickets';
@@ -17,7 +16,7 @@ function Account() {
 
   useEffect(() => {
     if (Object.keys(user).length) {
-      axios.get(`${requestApi}/api/zendesk/tickets`)
+      axios.get(`${requestApi}/api/zendesk/tickets/${user.email}`)
         .then(({ data }) => {
           makeTickets(data);
         })
