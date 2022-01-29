@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text, Modal } from 'react-native';
+import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text, Button, Modal } from 'react-native';
+import DatePicker from 'react-native-date-picker';
 import { useUser } from '../UserManager';
-import ScheduleRequest from './ScheduleRequest';
-import CallRequest from './CallRequest';
+import SubmitRequest from './SubmitRequest';
 import theme from '../../public/theme';
 
 const styles = StyleSheet.create({
@@ -85,16 +85,16 @@ const styles = StyleSheet.create({
 });
 
 function Profile({ navigation }) {
-  const [showModal, setShowModal] = useState(false);
   const [modalView, setModalView] = useState('none');
   const { user, openTickets, logoutUser } = useUser();
+
+  const [date, setDate] = useState(new Date());
 
   const handleLogout = () => {
     logoutUser();
   };
 
   const handlePressModal = (view) => {
-    setShowModal(!showModal);
     setModalView(view);
   };
 
@@ -132,15 +132,15 @@ function Profile({ navigation }) {
 
       <View style={styles.taskContainer}>
         <TouchableOpacity style={styles.task} onPress={() => navigation.navigate('Tickets')}>
-          <Text style={theme.darkTxt}>view open requests</Text>
+          <Text style={theme.darkTxt}>view requests</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.task} onPress={() => handlePressModal('schedule')}>
-          <Text style={theme.darkTxt}>schedule an appointment</Text>
+          <Text style={theme.darkTxt}>submit a request</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.task} onPress={() => handlePressModal('call')}>
-          <Text style={theme.darkTxt}>request a call</Text>
+          <Text style={theme.darkTxt}>schedule a call</Text>
         </TouchableOpacity>
       </View>
 
@@ -148,9 +148,22 @@ function Profile({ navigation }) {
         <Text style={theme.backgroundTxt} onPress={handleLogout}>logout</Text>
         {/* <Text style={theme.backgroundTxt}>Chat</Text> */}
       </View>
+      <DatePicker
+        modal
+        title="Schedule Call"
+        open={modalView === 'call'}
+        date={date}
+        onConfirm={(newDate) => {
+          setModalView('none');
+          setDate(newDate);
+        }}
+        onCancel={() => {
+          setModalView('none');
+        }}
+      />
 
       <Modal
-        visible={showModal}
+        visible={modalView === 'schedule'}
         animationType="slide"
         transparent
       >
@@ -158,8 +171,7 @@ function Profile({ navigation }) {
           <View style={styles.modalWrapper}>
             <View style={styles.modalContainer}>
               <Text onPress={() => handlePressModal('none')}>X</Text>
-              {modalView === 'schedule' && <ScheduleRequest />}
-              {modalView === 'call' && <CallRequest />}
+              <SubmitRequest />
             </View>
           </View>
         </SafeAreaView>

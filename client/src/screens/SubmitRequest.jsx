@@ -8,9 +8,11 @@ const styles = StyleSheet.create({
     padding: '2%',
     borderWidth: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   box: {
     alignItems: 'center',
+    justifyContent: 'center',
     width: '80%',
     height: '50%',
 
@@ -21,25 +23,17 @@ const styles = StyleSheet.create({
   },
 });
 
-function ScheduleRequest() {
+function SubmitRequest() {
   return (
     <View style={styles.container}>
-      <View style={styles.box}>
-        <Text>Select Date:</Text>
-        <View style={styles.selections}>
-          <Text> Here is where the dates go </Text>
-        </View>
-      </View>
-
       <View style={styles.box}>
         <Text>Select Window:</Text>
         <View style={styles.selections}>
           <Text> Here is where the times go </Text>
         </View>
       </View>
-
     </View>
   );
 }
 
-export default ScheduleRequest;
+export default SubmitRequest;
