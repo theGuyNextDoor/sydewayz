@@ -73,7 +73,7 @@ function Login() {
               }
               // SIGNUP
               if (action === 'signup') {
-                axios.post(`${requestApi}/api/google/register`, profile)
+                axios.post(`${requestApi}/api/google/register`, user)
                   .then(({ data }) => handleMessage(data))
                   .catch((err) => {
                     console.log(err);
@@ -93,12 +93,12 @@ function Login() {
     // GoogleSignin.hasPlayService()
     //   .then((response) => {
     //     const { type } = response;
-    //     const profile = response.user;
+    //     const user = response.user;
 
     //     if (type === 'success') {
     //       // LOGIN
     //       if (action === 'login') {
-    //         const { email } = profile;
+    //         const { email } = user;
     //         axios.get(`${requestApi}/api/google/login/${email}`)
     //           .then(({ data }) => {
     //             if (Array.isArray(data)) {
@@ -114,7 +114,7 @@ function Login() {
     //       }
     //       // SIGNUP
     //       if (action === 'signup') {
-    //         axios.post(`${requestApi}/api/google/register`, profile)
+    //         axios.post(`${requestApi}/api/google/register`, user)
     //           .then(({ data }) => handleMessage(data))
     //           .catch((err) => {
     //             console.log(err);
