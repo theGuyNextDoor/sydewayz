@@ -1,13 +1,10 @@
 import axios from 'axios';
 import React from 'react';
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-google-app-auth';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import { useUser } from '../UserManager';
 import theme from '../../public/theme';
-import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from '../../../config';
-
-WebBrowser.maybeCompleteAuthSession();
+import { WEB_CLIENT_ID, IOS_CLIENT_ID, ANDROID_CLIENT_ID } from '../../../config';
 
 const requestApi = 'http://localhost:3000'; // TEMPORARY
 // ${requestApi} DELETE ALL OCCURANCES
@@ -45,50 +42,69 @@ function Login() {
   // GOOGLE AUTHENTICATION BEGIN
   const handleGoogleSignIn = (action) => {
     const config = {
+      webClientId: WEB_CLIENT_ID,
       iosClientId: IOS_CLIENT_ID,
       androidClientId: ANDROID_CLIENT_ID,
-      scopes: ['profile'],
+      scopes: ['user'],
     };
 
-    Google.logInAsync(config)
-      .then((response) => {
-        const { type } = response;
-        const profile = response.user;
+    GoogleSignin.configure(config);
 
-        if (type === 'success') {
-          // LOGIN
-          if (action === 'login') {
-            const { email } = profile;
-            axios.get(`${requestApi}/api/google/login/${email}`)
-              .then(({ data }) => {
-                if (Array.isArray(data)) {
-                  loginUser(data[0]);
-                } else {
-                  handleMessage(data);
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-                handleMessage('ERROR IN DATABASE LOG IN'); // CHECK ERROR
-              });
-          }
-          // SIGNUP
-          if (action === 'signup') {
-            axios.post(`${requestApi}/api/google/register`, profile)
-              .then(({ data }) => handleMessage(data))
-              .catch((err) => {
-                console.log(err);
-                handleMessage('ERROR IN DATABASE SIGN UP'); // CHECK ERROR
-              });
-          }
-        } else {
-          handleMessage('Google sign in was canceled');
+    GoogleSignin.hasPlayServices()
+      .then((hasPlayService) => {
+        if (hasPlayService) {
+          GoogleSignin.signIn()
+            .then(({ user }) => {
+              console.log(JSON.stringify(user));
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
       })
       .catch((err) => {
         console.log(err);
-        handleMessage('ERROR WITH GOOGLE CONNECTION'); // CHECK ERROR
       });
+
+    // GoogleSignin.hasPlayService()
+    //   .then((response) => {
+    //     const { type } = response;
+    //     const profile = response.user;
+
+    //     if (type === 'success') {
+    //       // LOGIN
+    //       if (action === 'login') {
+    //         const { email } = profile;
+    //         axios.get(`${requestApi}/api/google/login/${email}`)
+    //           .then(({ data }) => {
+    //             if (Array.isArray(data)) {
+    //               loginUser(data[0]);
+    //             } else {
+    //               handleMessage(data);
+    //             }
+    //           })
+    //           .catch((err) => {
+    //             console.log(err);
+    //             handleMessage('ERROR IN DATABASE LOG IN'); // CHECK ERROR
+    //           });
+    //       }
+    //       // SIGNUP
+    //       if (action === 'signup') {
+    //         axios.post(`${requestApi}/api/google/register`, profile)
+    //           .then(({ data }) => handleMessage(data))
+    //           .catch((err) => {
+    //             console.log(err);
+    //             handleMessage('ERROR IN DATABASE SIGN UP'); // CHECK ERROR
+    //           });
+    //       }
+    //     } else {
+    //       handleMessage('Google sign in was canceled');
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     handleMessage('ERROR WITH GOOGLE CONNECTION'); // CHECK ERROR
+    //   });
   };
   // GOOGLE AUTHENTICATION END
 
