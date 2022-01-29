@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ImageBackground, Text } from 'react-native';
+import { StyleSheet, ImageBackground } from 'react-native';
 import Login from './screens/Login';
 import Account from './screens/Account';
 import { useUser } from './UserManager';
@@ -18,7 +18,6 @@ function Home() {
 
   return (
     <ImageBackground source={image} style={styles.container}>
-      <Text>SYDEWAYZ</Text>
       {!subscribed ? (<Login />) : (<Account />)}
     </ImageBackground>
   );

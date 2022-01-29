@@ -55,7 +55,31 @@ function Login() {
         if (hasPlayService) {
           GoogleSignin.signIn()
             .then(({ user }) => {
-              console.log(JSON.stringify(user));
+              // LOGIN
+              if (action === 'login') {
+                const { email } = user;
+                axios.get(`${requestApi}/api/google/login/${email}`)
+                  .then(({ data }) => {
+                    if (Array.isArray(data)) {
+                      loginUser(data[0]);
+                    } else {
+                      handleMessage(data);
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    handleMessage('ERROR IN DATABASE LOG IN'); // CHECK ERROR
+                  });
+              }
+              // SIGNUP
+              if (action === 'signup') {
+                axios.post(`${requestApi}/api/google/register`, profile)
+                  .then(({ data }) => handleMessage(data))
+                  .catch((err) => {
+                    console.log(err);
+                    handleMessage('ERROR IN DATABASE SIGN UP'); // CHECK ERROR
+                  });
+              }
             })
             .catch((err) => {
               console.log(err);
