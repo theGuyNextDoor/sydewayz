@@ -89,46 +89,6 @@ function Login() {
       .catch((err) => {
         console.log(err);
       });
-
-    // GoogleSignin.hasPlayService()
-    //   .then((response) => {
-    //     const { type } = response;
-    //     const user = response.user;
-
-    //     if (type === 'success') {
-    //       // LOGIN
-    //       if (action === 'login') {
-    //         const { email } = user;
-    //         axios.get(`${requestApi}/api/google/login/${email}`)
-    //           .then(({ data }) => {
-    //             if (Array.isArray(data)) {
-    //               loginUser(data[0]);
-    //             } else {
-    //               handleMessage(data);
-    //             }
-    //           })
-    //           .catch((err) => {
-    //             console.log(err);
-    //             handleMessage('ERROR IN DATABASE LOG IN'); // CHECK ERROR
-    //           });
-    //       }
-    //       // SIGNUP
-    //       if (action === 'signup') {
-    //         axios.post(`${requestApi}/api/google/register`, user)
-    //           .then(({ data }) => handleMessage(data))
-    //           .catch((err) => {
-    //             console.log(err);
-    //             handleMessage('ERROR IN DATABASE SIGN UP'); // CHECK ERROR
-    //           });
-    //       }
-    //     } else {
-    //       handleMessage('Google sign in was canceled');
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     handleMessage('ERROR WITH GOOGLE CONNECTION'); // CHECK ERROR
-    //   });
   };
   // GOOGLE AUTHENTICATION END
 

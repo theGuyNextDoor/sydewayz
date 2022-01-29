@@ -19,7 +19,6 @@ function Account() {
     if (Object.keys(user).length) {
       axios.get(`${requestApi}/api/zendesk/tickets`)
         .then(({ data }) => {
-          console.log('ACCOUNT', data); // TEST DELETE
           makeTickets(data);
         })
         .catch((err) => {

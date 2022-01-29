@@ -6,7 +6,6 @@ module.exports = {
     const { email, name, familyName, givenName, id, photoUrl } = req.body;
     db.query(google.postUser, [email, name, familyName, givenName, id, photoUrl], (err) => {
       if (err) {
-        console.log(err);
         res.status(201).send('Email already registered');
       } else {
         res.status(201).send('Your account is submitted for review');
@@ -21,7 +20,6 @@ module.exports = {
       let profile;
 
       if (err) {
-        console.log(err);
         res.status(400).send(err);
       } else if (!rows.length) {
         res.status(200).send('No account found');
