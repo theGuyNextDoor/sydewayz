@@ -1,18 +1,20 @@
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import { View } from 'react-native';
 import Login from './screens/Login';
 import Account from './screens/Account';
 import { useUser } from './UserManager';
-
-const image = require('../public/logo.png');
+import theme from '../public/theme';
 
 function Home() {
   const { subscribed } = useUser();
 
   return (
-    <ImageBackground source={image}>
-      {!subscribed ? (<Login />) : (<Account />)}
-    </ImageBackground>
+
+    <View style={theme.wrapper}>
+      {/* {!subscribed ? (<Login />) : (<Account />)} */}
+      {!subscribed && <Login />}
+      {subscribed && <Account />}
+    </View>
   );
 }
 

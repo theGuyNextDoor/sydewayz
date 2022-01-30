@@ -16,6 +16,7 @@ module.exports = {
     const { email } = req.params;
     db.query(google.getUser, [email], (err, data) => {
       const { rows } = data;
+      console.log('MODELS google.js - user info from db: \n', rows);
 
       if (err) {
         res.status(400).send(err);
@@ -31,7 +32,9 @@ module.exports = {
           firstName: rows[0].first_name,
           lastName: rows[0].last_name,
           phone: rows[0].phone,
+          photoUrl: rows[0].photo_url,
           registered: rows[0].registered,
+          organization: rows[0].organization,
         };
         res.status(200).send([profile]);
       }

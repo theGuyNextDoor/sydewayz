@@ -1,92 +1,23 @@
 import React, { useState } from 'react';
-import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text, Button, Modal } from 'react-native';
+import { ImageBackground, Image, View, TouchableOpacity, Text, Modal } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { useUser } from '../UserManager';
 import Form from './Form';
+import styles from '../../public/styles/Profile';
 import theme from '../../public/theme';
 
-const styles = StyleSheet.create({
-  header: {
-    height: '5%',
-  },
-
-  // Ticket
-  ticketContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ticketBox: {
-    height: '90%',
-    width: '90%',
-    padding: '2%',
-    alignItems: 'center',
-    backgroundColor: '#26C8D2',
-  },
-  schedule: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-    height: '10%',
-  },
-  descriptionBox: {
-    width: '90%',
-    height: '90%',
-    alignItems: 'center',
-    paddingBottom: '2%',
-
-    borderWidth: 1,
-  },
-  description: {
-    backgroundColor: '#FFFFFF',
-    flex: 1,
-    width: '80%',
-    paddingTop: '2%',
-
-    borderWidth: 1,
-  },
-
-  // Tasks
-  taskContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  task: {
-    backgroundColor: '#26C8D2',
-    height: '20%',
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  // Chat
-  footer: {
-    height: '10%',
-    paddingTop: '10%',
-    paddingLeft: '10%',
-    paddingRight: '10%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  modalWrapper: {
-    backgroundColor: '#E2F0FB99',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
-  modalContainer: {
-    backgroundColor: '#E2F0FB',
-    height: '70%',
-    width: '100%',
-    padding: '2%',
-  },
-});
+const image = require('../../public/logo.png');
 
 function Profile({ navigation }) {
   const [modalView, setModalView] = useState('none');
   const { user, openTickets, logoutUser } = useUser();
+  const { fullName, organization, photoUrl } = user;
+
+  console.log('SCREENS Profile - user data for user info:\n', user);
+  console.log('SCREENS Profile - user data for name:\n', fullName);
+  console.log('SCREENS Profile - user data for photo:\n', photoUrl);
+  console.log('SCREENS Profile - user data for org:\n', organization);
+  console.log('SCREENS Profile - user data for tickes:\n', openTickets.length);
 
   const [date, setDate] = useState(new Date());
 
@@ -98,85 +29,77 @@ function Profile({ navigation }) {
     setModalView(view);
   };
 
-  // LOOK FOR BETTER METHOD HANDELING THIS
-  const displayTicket = openTickets.map((ticket, index) => {
-    console.log('SCREENS Profile.jsx - display ticket:\n', ticket); //DELETE ME
-    const { createdAt, description, status } = ticket;
-    return (
-      <View key={index} style={styles.ticketBox}>
-        <View style={styles.schedule}>
-          <Text style={theme.darkTxt}>{createdAt}</Text>
-          <Text style={theme.darkTxt}>{status}</Text>
-        </View>
-
-        <View style={styles.descriptionBox}>
-          <View>
-            <Text style={theme.darkTxt}>agent</Text>
-          </View>
-
-          <View style={styles.description}>
-            <Text>{ticket.description}</Text>
-          </View>
-
-        </View>
-      </View>
-    );
-  });
-
   return (
-    <View style={theme.wrapper}>
-      <View style={styles.ticketContainer}>
-        <Text style={theme.backgroundTxt}>next appointment</Text>
-        {displayTicket[0]}
-      </View>
+    <ImageBackground source={image}>
+      <View style={theme.container}>
 
-      <View style={styles.taskContainer}>
-        <TouchableOpacity style={styles.task} onPress={() => navigation.navigate('Tickets')}>
-          <Text style={theme.darkTxt}>view requests</Text>
-        </TouchableOpacity>
+        {/* SETTINGS */}
+        <View style={styles.settingsContainer}>
+          <Text style={styles.settingsBtn} onPress={handleLogout}>logout</Text>
+          <Text style={styles.settingsBtn}>settings</Text>
+        </View>
 
-        <TouchableOpacity style={styles.task} onPress={() => handleModalView('schedule')}>
-          <Text style={theme.darkTxt}>submit a request</Text>
-        </TouchableOpacity>
+        {/* PROFILE  */}
+        <View style={styles.profileContainer}>
+          <Image
+            style={styles.img}
+            source={{ uri: photoUrl }}
+          />
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoTxt}>{fullName}</Text>
+            <Text style={styles.infoTxt}>{organization}</Text>
+          </View>
+        </View>
 
-        <TouchableOpacity style={styles.task} onPress={() => handleModalView('call')}>
-          <Text style={theme.darkTxt}>schedule a call</Text>
-        </TouchableOpacity>
-      </View>
+        {/* INFO */}
+        <View style={styles.ticketInfoContainer}>
+          <Text>open</Text>
+          <Text>all</Text>
+          <Text>closed</Text>
+        </View>
 
-      <View style={styles.footer}>
-        <Text style={theme.backgroundTxt} onPress={handleLogout}>logout</Text>
-        {/* <Text style={theme.backgroundTxt}>Chat</Text> */}
-      </View>
-      <DatePicker
-        modal
-        title="Schedule Call"
-        open={modalView === 'call'}
-        date={date}
-        onConfirm={(newDate) => {
-          setModalView('none');
-          setDate(newDate);
-        }}
-        onCancel={() => {
-          setModalView('none');
-        }}
-      />
+        {/* TABS */}
+        <View style={styles.tabContainer}>
+          <TouchableOpacity style={styles.tab} onPress={() => navigation.navigate('Tickets')}>
+            <Text>view requests</Text>
+          </TouchableOpacity>
 
-      <Modal
-        visible={modalView === 'schedule'}
-        animationType="slide"
-        transparent
-      >
-        <SafeAreaView style={theme.wrapper}>
+          <TouchableOpacity style={styles.tab} onPress={() => handleModalView('schedule')}>
+            <Text>submit a request</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.tab} onPress={() => handleModalView('call')}>
+            <Text>schedule a call</Text>
+          </TouchableOpacity>
+        </View>
+
+        <DatePicker
+          modal
+          title="Schedule Call"
+          open={modalView === 'call'}
+          date={date}
+          onConfirm={(newDate) => {
+            setModalView('none');
+            setDate(newDate);
+          }}
+          onCancel={() => {
+            setModalView('none');
+          }}
+        />
+
+        <Modal
+          visible={modalView === 'schedule'}
+          animationType="slide"
+          transparent
+        >
           <View style={styles.modalWrapper}>
             <View style={styles.modalContainer}>
               <Form handleModalView={handleModalView} />
             </View>
           </View>
-        </SafeAreaView>
-      </Modal>
-
-    </View>
+        </Modal>
+      </View>
+    </ImageBackground>
   );
 }
 

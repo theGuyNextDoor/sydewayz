@@ -1,39 +1,19 @@
 import axios from 'axios';
 import React from 'react';
-import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { ImageBackground, SafeAreaView, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import { useUser } from '../UserManager';
+import styles from '../../public/styles/Login';
 import theme from '../../public/theme';
 import { WEB_CLIENT_ID, IOS_CLIENT_ID, ANDROID_CLIENT_ID } from '../../../config';
+
+const image = require('../../public/logo.png');
 
 const requestApi = 'http://localhost:3000'; // TEMPORARY
 // ${requestApi} DELETE ALL OCCURANCES
 
-const styles = StyleSheet.create({
-  admin: {
-    flex: 3,
-    alignItems: 'flex-end',
-    paddingRight: 10,
-  },
-  btnContainer: {
-    flex: 1,
-  },
-  signIn: {
-    backgroundColor: '#26C8D2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '50%',
-  },
-  signUp: {
-    backgroundColor: '#020033',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '50%',
-  },
-});
-
 function Login() {
-  const { loginUser } = useUser();
+  const { loginUser, signinLoading, signupLoading } = useUser();
 
   const handleMessage = (message) => {
     alert(message); // CREATE CUSTOM ALERT
@@ -93,33 +73,45 @@ function Login() {
   // GOOGLE AUTHENTICATION END
 
   return (
-    <SafeAreaView style={theme.wrapper}>
+    <ImageBackground source={image}>
+      <SafeAreaView style={theme.wrapper}>
+        <View style={styles.container}>
+          {/* SIGN IN */}
+          {!signinLoading && (
+          <TouchableOpacity
+            style={styles.signin}
+            onPress={() => handleGoogleSignIn('login')}
+          >
+            <Text style={theme.darkTxt}>Sign In</Text>
+          </TouchableOpacity>
+          )}
 
-      <View style={styles.admin}>
-        <Text>admin</Text>
-      </View>
+          {/* LOADING */}
+          {signinLoading && (
+          <View style={styles.signin} onPress={handleGoogleSignIn}>
+            <ActivityIndicator size="large" color="#020033" />
+          </View>
+          )}
 
-      <View style={styles.btnContainer}>
-        <TouchableOpacity
-          style={styles.signIn}
-          onPress={() => handleGoogleSignIn('login')}
-        >
-          <Text style={theme.darkTxt}>Sign In With Google</Text>
-        </TouchableOpacity>
+          {/* SIGN UP */}
+          {!signupLoading && (
+          <TouchableOpacity
+            style={styles.signup}
+            onPress={() => handleGoogleSignIn('signup')}
+          >
+            <Text style={theme.lightTxt}>Sign Up</Text>
+          </TouchableOpacity>
+          )}
 
-        <TouchableOpacity
-          style={styles.signUp}
-          onPress={() => handleGoogleSignIn('signup')}
-        >
-          <Text style={theme.lightTxt}>Sign Up</Text>
-        </TouchableOpacity>
-
-        {/* <TouchableOpacity style={styles.signIn} onPress={handleGoogleSignIn}>
-          <ActivityIndicator size="large" color="black" />
-        </TouchableOpacity> */}
-      </View>
-
-    </SafeAreaView>
+          {/* LOADING */}
+          {signupLoading && (
+          <View style={styles.signup} onPress={handleGoogleSignIn}>
+            <ActivityIndicator size="large" color="#26C8D2" />
+          </View>
+          )}
+        </View>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 

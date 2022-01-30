@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { useUser } from '../UserManager';
-import theme from '../../public/theme';
 import styles from '../../public/styles/Form';
+import theme from '../../public/theme';
 
 function Form({ handleModalView }) {
   const { user } = useUser();
@@ -25,7 +25,7 @@ function Form({ handleModalView }) {
       subject: '',
       description: '',
     });
-    console.log(data);
+    console.log('SCREENS Form.js - onSubmit ticket created:\n', data);
   };
 
   return (

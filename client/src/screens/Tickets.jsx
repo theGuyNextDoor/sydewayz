@@ -43,9 +43,9 @@ function Tickets({ navigation }) {
     return (
       <View style={styles.ticketContainer} key={index}>
         <Text>{status}</Text>
-        <Text>{priority}</Text>
         <Text>{subject}</Text>
         <Text>{description}</Text>
+        <Text>{priority}</Text>
       </View>
     );
   });
