@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text, Button, Modal } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { useUser } from '../UserManager';
-import SubmitRequest from './SubmitRequest';
+import Form from './Form';
 import theme from '../../public/theme';
 
 const styles = StyleSheet.create({
@@ -94,7 +94,7 @@ function Profile({ navigation }) {
     logoutUser();
   };
 
-  const handlePressModal = (view) => {
+  const handleModalView = (view) => {
     setModalView(view);
   };
 
@@ -135,11 +135,11 @@ function Profile({ navigation }) {
           <Text style={theme.darkTxt}>view requests</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.task} onPress={() => handlePressModal('schedule')}>
+        <TouchableOpacity style={styles.task} onPress={() => handleModalView('schedule')}>
           <Text style={theme.darkTxt}>submit a request</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.task} onPress={() => handlePressModal('call')}>
+        <TouchableOpacity style={styles.task} onPress={() => handleModalView('call')}>
           <Text style={theme.darkTxt}>schedule a call</Text>
         </TouchableOpacity>
       </View>
@@ -170,8 +170,7 @@ function Profile({ navigation }) {
         <SafeAreaView style={theme.wrapper}>
           <View style={styles.modalWrapper}>
             <View style={styles.modalContainer}>
-              <Text onPress={() => handlePressModal('none')}>X</Text>
-              <SubmitRequest />
+              <Form handleModalView={handleModalView} />
             </View>
           </View>
         </SafeAreaView>
