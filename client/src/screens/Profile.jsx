@@ -43,7 +43,11 @@ function Profile({ navigation }) {
           />
           <View style={styles.infoContainer}>
             <Text style={styles.infoTxt}>{fullName}</Text>
-            <Text style={styles.infoTxt}>{organization}</Text>
+            <Text style={styles.infoTxt}>
+              &quot;
+              {organization}
+              &quot;
+            </Text>
           </View>
         </View>
 

@@ -6,10 +6,10 @@ const theme = StyleSheet.create({
     height: '100%',
   },
   container: {
-    height: '100%',
-    padding: '5%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    height: '100%',
+    padding: '5%',
   },
   lightTxt: {
     color: '#26C8D2',
