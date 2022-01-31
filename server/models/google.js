@@ -16,7 +16,6 @@ module.exports = {
     const { email } = req.params;
     db.query(google.getUser, [email], (err, data) => {
       const { rows } = data;
-      console.log('MODELS google.js - user info from db: \n', rows);
 
       if (err) {
         res.status(400).send(err);

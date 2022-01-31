@@ -9,7 +9,9 @@ export function UserProvider({ children }) {
   const [signuploading, setSignupLoading] = useState(false);
   const [user, setUser] = useState({});
   const [subscribed, setSubscribed] = useState(false);
-  const [openTickets, setOpenTickets] = useState([]);
+  const [allTickets, setAllTickets] = useState([]); // Refactor
+  const [openTickets, setOpenTickets] = useState([]); // Refactor
+  const [closedTickets, setCLosedTickets] = useState([]); // Refactor
 
   const loginUser = (usrObj) => {
     setUser(usrObj);
@@ -25,7 +27,7 @@ export function UserProvider({ children }) {
   const showSignupLoading = (bool) => {
     setSignupLoading(bool);
   };
-  const makeTickets = (ticketArr) => {
+  const makeTickets = (ticketArr) => { // Refactor
     setOpenTickets(ticketArr);
   };
 
@@ -39,6 +41,7 @@ export function UserProvider({ children }) {
       logoutUser,
       user,
       subscribed,
+
       openTickets,
       makeTickets
     }}>

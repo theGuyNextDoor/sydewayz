@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   img: {
-    width: '20%',
+    width: '15%',
     height: '30%',
     borderRadius: 50,
     marginRight: '5%',
@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
   infoTxt: {
     color: '#FFF',
     fontWeight: 'bold',
+    textTransform: 'uppercase',
+    textShadowOffset: { width: 5, height: 5 },
+    textShadowRadius: 20,
+    textShadowColor: '#000',
   },
 
   // TICKETS
@@ -41,13 +45,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+  },
+  ticketInfo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '50%',
+    width: '30%',
+    borderRadius: 10,
 
-    backgroundColor: 'white',
+    backgroundColor: '#26C8D2',
   },
 
   // TABS
   tabContainer: {
-    flex: 6,
+    flex: 11,
     alignItems: 'center',
     justifyContent: 'space-evenly',
     width: '100%',

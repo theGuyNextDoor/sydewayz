@@ -9,15 +9,11 @@ import theme from '../../public/theme';
 const image = require('../../public/logo.png');
 
 function Profile({ navigation }) {
+  // Set a state for open and closed tickets in UserManager
+  const [closedTickets, setClosedTickets] = useState([]);
   const [modalView, setModalView] = useState('none');
   const { user, openTickets, logoutUser } = useUser();
   const { fullName, organization, photoUrl } = user;
-
-  console.log('SCREENS Profile - user data for user info:\n', user);
-  console.log('SCREENS Profile - user data for name:\n', fullName);
-  console.log('SCREENS Profile - user data for photo:\n', photoUrl);
-  console.log('SCREENS Profile - user data for org:\n', organization);
-  console.log('SCREENS Profile - user data for tickes:\n', openTickets.length);
 
   const [date, setDate] = useState(new Date());
 
@@ -53,9 +49,18 @@ function Profile({ navigation }) {
 
         {/* INFO */}
         <View style={styles.ticketInfoContainer}>
-          <Text>open</Text>
-          <Text>all</Text>
-          <Text>closed</Text>
+          <View style={styles.ticketInfo}>
+            <Text>open requests</Text>
+            <Text>{openTickets.length}</Text>
+          </View>
+          <View style={styles.ticketInfo}>
+            <Text>all requests</Text>
+            <Text>{openTickets.length}</Text>
+          </View>
+          <View style={styles.ticketInfo}>
+            <Text>resolved requests</Text>
+            <Text>{closedTickets.length}</Text>
+          </View>
         </View>
 
         {/* TABS */}
