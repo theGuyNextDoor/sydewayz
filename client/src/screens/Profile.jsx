@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { ImageBackground, Image, View, TouchableOpacity, Text, Modal } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { useUser } from '../UserManager';
-import Form from './Form';
+import ReusableModal from './ReusableModal';
+// import Form from './Form';
 import styles from '../../public/styles/Profile';
 import theme from '../../public/theme';
 
@@ -10,7 +11,8 @@ const image = require('../../public/logo.png');
 
 function Profile({ navigation }) {
   // Set a state for open and closed Requests in UserManager
-  const [modalView, setModalView] = useState('none');
+  const [requestModal, setRequestModsl] = useState(false);
+  const [scheduleModal, setScheduleModal] = useState(false);
   const { user, logoutUser, allRequests, openRequests, closedRequests } = useUser();
   const { fullName, organization, photoUrl } = user;
 
@@ -19,9 +21,12 @@ function Profile({ navigation }) {
   const handleLogout = () => {
     logoutUser();
   };
+  const openRequestModal = () => {
+    setRequestModsl(!requestModal);
+  };
 
-  const handleModalView = (view) => {
-    setModalView(view);
+  const openScheduleModal = () => {
+    setScheduleModal(!scheduleModal);
   };
 
   return (
@@ -74,30 +79,32 @@ function Profile({ navigation }) {
             <Text>view requests</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.tab} onPress={() => handleModalView('schedule')}>
+          <TouchableOpacity style={styles.tab} onPress={openRequestModal}>
             <Text>submit a request</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.tab} onPress={() => handleModalView('call')}>
+          <TouchableOpacity style={styles.tab} onPress={openScheduleModal}>
             <Text>schedule a call</Text>
           </TouchableOpacity>
         </View>
 
+        {scheduleModal && (
         <DatePicker
           modal
           title="Schedule Call"
-          open={modalView === 'call'}
+          open={scheduleModal}
           date={date}
           onConfirm={(newDate) => {
-            setModalView('none');
+            openScheduleModal();
             setDate(newDate);
           }}
           onCancel={() => {
-            setModalView('none');
+            openScheduleModal();
           }}
         />
+        )}
 
-        <Modal
+        {/* <Modal
           visible={modalView === 'schedule'}
           animationType="slide"
           transparent
@@ -107,7 +114,13 @@ function Profile({ navigation }) {
               <Form handleModalView={handleModalView} />
             </View>
           </View>
-        </Modal>
+        </Modal> */}
+        {requestModal && (
+        <ReusableModal
+          openModal={openRequestModal}
+          client={null}
+        />
+        )}
       </View>
     </ImageBackground>
   );

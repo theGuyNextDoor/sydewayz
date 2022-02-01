@@ -13,7 +13,6 @@ module.exports = {
 
         rows.forEach((item) => {
           profile = {
-            // id: item.id,
             fullName: item.full_name,
             email: item.email,
             phone: item.phone,
@@ -23,6 +22,16 @@ module.exports = {
           users = [...users, profile];
         });
         res.status(200).send(users);
+      }
+    });
+  },
+  runDeleteUser: (req, res) => {
+    const { email } = req.params;
+    db.query(admin.deleteUser, [email], (err, data) => {
+      if (err) {
+        res.status(204).send(err);
+      } else {
+        res.status(200).send(data);
       }
     });
   },

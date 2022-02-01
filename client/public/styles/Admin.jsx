@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     borderRadius: 10,
   },
+  text: {
+    textAlign: 'center',
+    backgroundColor: '#26C8D2',
+    height: 75,
+  },
 });
 
 export default styles;

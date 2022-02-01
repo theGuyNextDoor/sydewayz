@@ -11,9 +11,13 @@ export function UserProvider({ children }) {
   const [endUser, setEndUser] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [agent, setAgent] = useState(false);
-  const [allRequests, setAllRequests] = useState([]); // Refactor
-  const [openRequests, setOpenRequests] = useState([]); // Refactor
-  const [closedRequests, setClosedRequests] = useState([]); // Refactor
+  const [allRequests, setAllRequests] = useState([]);
+  const [openRequests, setOpenRequests] = useState([]);
+  const [closedRequests, setClosedRequests] = useState([]);
+
+  const handleMessage = (message) => {
+    alert(message); // CREATE CUSTOM ALERT
+  };
 
   const loginUser = (usrObj, role) => {
     setUser(usrObj);
@@ -53,6 +57,8 @@ export function UserProvider({ children }) {
 
   return (
     <UserContext.Provider value={{
+      handleMessage,
+
       signinLoading,
       showSigninLoading,
 

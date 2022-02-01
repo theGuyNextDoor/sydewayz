@@ -33,10 +33,7 @@ function Form({ handleModalView }) {
       <View style={styles.container}>
 
         <View style={styles.subjectContainer}>
-          <View style={styles.subjectHeaderContainer}>
-            <Text>subject:</Text>
-            <Text onPress={() => handleModalView('none')}>X</Text>
-          </View>
+          <Text>subject:</Text>
           <Controller
             control={control}
             rules={{ required: true, maxLength: 20 }}
@@ -50,7 +47,9 @@ function Form({ handleModalView }) {
             )}
             name="subject"
           />
-          <Text style={styles.errorMsg}>Here is the error</Text>
+          {errors.subject && (
+            <Text style={styles.errorMsg}>There is an error </Text>
+          )}
 
           {/* {errors.subject?.type === 'required' && (
             <Text style={styles.errorMsg}>subject is required</Text>
@@ -77,7 +76,9 @@ function Form({ handleModalView }) {
             )}
             name="description"
           />
-          <Text style={styles.errorMsg}>Here is the error</Text>
+          {errors.description && (
+            <Text style={styles.errorMsg}>There is an error </Text>
+          )}
 
           {/* {errors.description?.type === 'required' && (
             <Text style={styles.errorMsg}>description is required</Text>

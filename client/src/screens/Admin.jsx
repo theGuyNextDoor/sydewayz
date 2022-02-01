@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { ImageBackground, SafeAreaView, ScrollView, View, Text, Modal } from 'react-native';
+import { ImageBackground, SafeAreaView, ScrollView, TouchableOpacity, Text } from 'react-native';
+import ReusableModal from './ReusableModal';
 import { useUser } from '../UserManager';
 import styles from '../../public/styles/Admin';
 import theme from '../../public/theme';
@@ -11,8 +12,9 @@ const requestApi = 'http://localhost:3000'; // TEMPORARY
 // ${requestApi} DELETE ALL OCCURANCES
 
 function Admin() {
+  const [client, setClient] = useState({});
   const [pending, setPending] = useState([]);
-  const [refreshPending, setRefreshPending] = useState(false);
+  const [modalView, setModalView] = useState(false);
   const { user, logoutUser } = useUser();
 
   useEffect(() => {
@@ -21,15 +23,24 @@ function Admin() {
         setPending(data);
       })
       .catch((err) => console.log(err));
-  }, [user]); // MAY NEED TO CHANGE
+  }, [modalView === false]);
+
+  const openModal = (clientObj) => {
+    setClient(clientObj);
+    setModalView(!modalView);
+  };
 
   const approvalList = pending.map((item, index) => {
     const { fullName, email } = item;
     return (
-      <View key={index} style={[theme.view, styles.userContainer]}>
+      <TouchableOpacity
+        key={index}
+        style={[theme.view, styles.userContainer]}
+        onPress={() => openModal(item)}
+      >
         <Text>{fullName}</Text>
         <Text>{email}</Text>
-      </View>
+      </TouchableOpacity>
 
     );
   });
@@ -40,8 +51,15 @@ function Admin() {
         <Text style={styles.logout} onPress={logoutUser}>logout</Text>
         <ScrollView style={styles.scrollView}>
           {approvalList}
+          {!pending.length && <Text style={styles.text}>No requests</Text>}
         </ScrollView>
       </SafeAreaView>
+      {modalView && (
+      <ReusableModal
+        openModal={openModal}
+        client={client}
+      />
+      )}
     </ImageBackground>
   );
 }

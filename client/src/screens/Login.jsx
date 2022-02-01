@@ -13,11 +13,7 @@ const requestApi = 'http://localhost:3000'; // TEMPORARY
 // ${requestApi} DELETE ALL OCCURANCES
 
 function Login() {
-  const { loginUser, signinLoading, signupLoading } = useUser();
-
-  const handleMessage = (message) => {
-    alert(message); // CREATE CUSTOM ALERT
-  };
+  const { loginUser, signinLoading, signupLoading, handleMessage } = useUser();
 
   // GOOGLE AUTHENTICATION BEGIN
   const handleGoogleSignIn = (action) => {
