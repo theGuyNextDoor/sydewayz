@@ -10,9 +10,8 @@ const image = require('../../public/logo.png');
 
 function Profile({ navigation }) {
   // Set a state for open and closed tickets in UserManager
-  const [closedTickets, setClosedTickets] = useState([]);
   const [modalView, setModalView] = useState('none');
-  const { user, openTickets, logoutUser } = useUser();
+  const { user, logoutUser, allTickets, openTickets, closedTickets } = useUser();
   const { fullName, organization, photoUrl } = user;
 
   const [date, setDate] = useState(new Date());
@@ -43,11 +42,13 @@ function Profile({ navigation }) {
           />
           <View style={styles.infoContainer}>
             <Text style={styles.infoTxt}>{fullName}</Text>
-            <Text style={styles.infoTxt}>
-              &quot;
-              {organization}
-              &quot;
-            </Text>
+            {organization ? (
+              <Text style={styles.infoTxt}>
+                &quot;
+                {organization}
+                &quot;
+              </Text>
+            ) : <Text> </Text>}
           </View>
         </View>
 
@@ -59,7 +60,7 @@ function Profile({ navigation }) {
           </View>
           <View style={styles.ticketInfo}>
             <Text>all requests</Text>
-            <Text>{openTickets.length}</Text>
+            <Text>{allTickets.length}</Text>
           </View>
           <View style={styles.ticketInfo}>
             <Text>resolved requests</Text>

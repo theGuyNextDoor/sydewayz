@@ -41,7 +41,13 @@ function Login() {
                 axios.get(`${requestApi}/api/google/login/${email}`)
                   .then(({ data }) => {
                     if (Array.isArray(data)) {
-                      loginUser(data[0]);
+                      if (data[0].isAdmin && data[0].user_role_id === 1) {
+                        loginUser(data[0], 'admin');
+                      } else if (data.isAdmin && data[0].user_role_id === 2) {
+                        loginUser(data[0], 'agent');
+                      } else {
+                        loginUser(data[0], 'end-user');
+                      }
                     } else {
                       handleMessage(data);
                     }

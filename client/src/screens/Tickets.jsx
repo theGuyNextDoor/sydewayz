@@ -7,9 +7,9 @@ import styles from '../../public/styles/Tickets';
 const image = require('../../public/logo.png');
 
 function Tickets({ navigation }) {
-  const { openTickets } = useUser();
+  const { allTickets } = useUser();
 
-  const tickets = openTickets.map((ticket, index) => {
+  const tickets = allTickets.map((ticket, index) => {
     const { id, subject, description, status, priority } = ticket;
 
     return (

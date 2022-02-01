@@ -12,13 +12,18 @@ const requestApi = 'http://localhost:3000'; // TEMPORARY
 const Stack = createNativeStackNavigator();
 
 function Account() {
-  const { user, makeTickets } = useUser();
+  const { user, makeAllTickets, makeStatusTickets } = useUser();
 
   useEffect(() => {
     if (Object.keys(user).length) {
       axios.get(`${requestApi}/api/zendesk/tickets/${user.email}`)
         .then(({ data }) => {
-          makeTickets(data);
+          console.log('SCREENS Account.jsx Here is the response data:\n', data);
+          data.forEach((item) => {
+            // console.log('SCREENS Account.jsx - here is the ticket: \n', item);
+            makeStatusTickets(item, item.status);
+          });
+          makeAllTickets(data);
         })
         .catch((err) => {
           console.log(err);

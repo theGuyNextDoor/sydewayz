@@ -21,13 +21,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   img: {
-    width: '15%',
-    height: '30%',
+    width: '25%',
+    height: '60%',
     borderRadius: 50,
     marginRight: '5%',
   },
   infoContainer: {
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   infoTxt: {
     color: '#FFF',
@@ -40,17 +41,19 @@ const styles = StyleSheet.create({
 
   // TICKETS
   ticketInfoContainer: {
-    flex: 3,
+    flex: 4,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
   },
   ticketInfo: {
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     height: '50%',
     width: '30%',
+    paddingTop: '2%',
+    paddingBottom: '2%',
     borderRadius: 10,
 
     backgroundColor: '#26C8D2',

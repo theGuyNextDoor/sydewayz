@@ -9,13 +9,25 @@ export function UserProvider({ children }) {
   const [signuploading, setSignupLoading] = useState(false);
   const [user, setUser] = useState({});
   const [subscribed, setSubscribed] = useState(false);
+  const [admin, setAdmin] = useState(false);
+  const [agent, setAgent] = useState(false);
   const [allTickets, setAllTickets] = useState([]); // Refactor
   const [openTickets, setOpenTickets] = useState([]); // Refactor
-  const [closedTickets, setCLosedTickets] = useState([]); // Refactor
+  const [closedTickets, setClosedTickets] = useState([]); // Refactor
 
-  const loginUser = (usrObj) => {
+  const loginUser = (usrObj, role) => {
     setUser(usrObj);
-    setSubscribed(true);
+
+    switch (role) {
+      case 'admin':
+        setAdmin(true);
+        break;
+      case 'agent':
+        setAgent(true);
+        break;
+      default:
+        setSubscribed(true);
+    }
   };
   const logoutUser = () => {
     setUser({});
@@ -27,8 +39,15 @@ export function UserProvider({ children }) {
   const showSignupLoading = (bool) => {
     setSignupLoading(bool);
   };
-  const makeTickets = (ticketArr) => { // Refactor
-    setOpenTickets(ticketArr);
+  const makeAllTickets = (ticketArr) => {
+    setAllTickets(ticketArr);
+  };
+  const makeStatusTickets = (ticket, status) =>{
+    if (status === 'open') {
+      setOpenTickets([...openTickets, ticket]);
+    } else {
+      setClosedTickets([...closedTickets, ticket]);
+    }
   };
 
   return (
@@ -42,8 +61,11 @@ export function UserProvider({ children }) {
       user,
       subscribed,
 
+      allTickets,
       openTickets,
-      makeTickets
+      closedTickets,
+      makeAllTickets,
+      makeStatusTickets,
     }}>
       {children}
     </UserContext.Provider>

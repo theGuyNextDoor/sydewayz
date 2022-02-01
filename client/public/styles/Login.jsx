@@ -11,17 +11,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '15%',
-    width: '30%',
-    borderRadius: 10,
+    width: '100%',
   },
   signup: {
     backgroundColor: '#020033',
     alignItems: 'center',
     justifyContent: 'center',
     height: '15%',
-    width: '30%',
-    borderRadius: 10,
-    marginTop: '2%',
+    width: '100%',
   },
 });
 
