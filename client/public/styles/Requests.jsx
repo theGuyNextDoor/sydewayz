@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  ticketContainer: {
+  requestContainer: {
     width: '90%',
     borderRadius: 10,
     padding: '5%',

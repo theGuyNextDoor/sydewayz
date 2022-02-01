@@ -8,12 +8,12 @@ export function UserProvider({ children }) {
   const [signinLoading, setSigninLoading] = useState(false);
   const [signuploading, setSignupLoading] = useState(false);
   const [user, setUser] = useState({});
-  const [subscribed, setSubscribed] = useState(false);
+  const [endUser, setEndUser] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [agent, setAgent] = useState(false);
-  const [allTickets, setAllTickets] = useState([]); // Refactor
-  const [openTickets, setOpenTickets] = useState([]); // Refactor
-  const [closedTickets, setClosedTickets] = useState([]); // Refactor
+  const [allRequests, setAllRequests] = useState([]); // Refactor
+  const [openRequests, setOpenRequests] = useState([]); // Refactor
+  const [closedRequests, setClosedRequests] = useState([]); // Refactor
 
   const loginUser = (usrObj, role) => {
     setUser(usrObj);
@@ -26,12 +26,12 @@ export function UserProvider({ children }) {
         setAgent(true);
         break;
       default:
-        setSubscribed(true);
+        setEndUser(true);
     }
   };
   const logoutUser = () => {
     setUser({});
-    setSubscribed(false);
+    setEndUser(false);
   };
   const showSigninLoading = (bool) => {
     setSigninLoading(bool);
@@ -39,14 +39,13 @@ export function UserProvider({ children }) {
   const showSignupLoading = (bool) => {
     setSignupLoading(bool);
   };
-  const makeAllTickets = (ticketArr) => {
-    setAllTickets(ticketArr);
-  };
-  const makeStatusTickets = (ticket, status) =>{
+  const makeRequests = (requestArr, status) => {
     if (status === 'open') {
-      setOpenTickets([...openTickets, ticket]);
+      setOpenRequests(requestArr);
+    } else if (status === 'closed') {
+      setClosedRequests(requestArr);
     } else {
-      setClosedTickets([...closedTickets, ticket]);
+      setAllRequests(requestArr);
     }
   };
 
@@ -54,18 +53,21 @@ export function UserProvider({ children }) {
     <UserContext.Provider value={{
       signinLoading,
       showSigninLoading,
+
       signuploading,
       showSignupLoading,
+
+      user,
       loginUser,
       logoutUser,
-      user,
-      subscribed,
+      endUser,
+      agent,
+      admin,
 
-      allTickets,
-      openTickets,
-      closedTickets,
-      makeAllTickets,
-      makeStatusTickets,
+      allRequests,
+      openRequests,
+      closedRequests,
+      makeRequests,
     }}>
       {children}
     </UserContext.Provider>

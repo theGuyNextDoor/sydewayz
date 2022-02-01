@@ -9,9 +9,9 @@ import theme from '../../public/theme';
 const image = require('../../public/logo.png');
 
 function Profile({ navigation }) {
-  // Set a state for open and closed tickets in UserManager
+  // Set a state for open and closed Requests in UserManager
   const [modalView, setModalView] = useState('none');
-  const { user, logoutUser, allTickets, openTickets, closedTickets } = useUser();
+  const { user, logoutUser, allRequests, openRequests, closedRequests } = useUser();
   const { fullName, organization, photoUrl } = user;
 
   const [date, setDate] = useState(new Date());
@@ -56,21 +56,21 @@ function Profile({ navigation }) {
         <View style={styles.ticketInfoContainer}>
           <View style={styles.ticketInfo}>
             <Text>open requests</Text>
-            <Text>{openTickets.length}</Text>
+            <Text>{openRequests.length}</Text>
           </View>
           <View style={styles.ticketInfo}>
             <Text>all requests</Text>
-            <Text>{allTickets.length}</Text>
+            <Text>{allRequests.length}</Text>
           </View>
           <View style={styles.ticketInfo}>
             <Text>resolved requests</Text>
-            <Text>{closedTickets.length}</Text>
+            <Text>{closedRequests.length}</Text>
           </View>
         </View>
 
         {/* TABS */}
         <View style={styles.tabContainer}>
-          <TouchableOpacity style={styles.tab} onPress={() => navigation.navigate('Tickets')}>
+          <TouchableOpacity style={styles.tab} onPress={() => navigation.navigate('Requests')}>
             <Text>view requests</Text>
           </TouchableOpacity>
 

@@ -2,18 +2,18 @@ import React from 'react';
 import { ImageBackground, View, ScrollView, Text } from 'react-native';
 import { useUser } from '../UserManager';
 import theme from '../../public/theme';
-import styles from '../../public/styles/Tickets';
+import styles from '../../public/styles/Requests';
 
 const image = require('../../public/logo.png');
 
-function Tickets({ navigation }) {
-  const { allTickets } = useUser();
+function Requests({ navigation }) {
+  const { allRequests } = useUser();
 
-  const tickets = allTickets.map((ticket, index) => {
-    const { id, subject, description, status, priority } = ticket;
+  const requests = allRequests.map((request, index) => {
+    const { id, subject, description, status, priority } = request;
 
     return (
-      <View key={index} style={styles.ticketContainer}>
+      <View key={index} style={styles.requestContainer}>
         <View style={styles.statusContainer}>
           <Text style={styles.status}>
             status:   {status}
@@ -36,11 +36,11 @@ function Tickets({ navigation }) {
     <ImageBackground source={image}>
       <View style={theme.container}>
         <ScrollView>
-          {tickets}
+          {requests}
         </ScrollView>
       </View>
     </ImageBackground>
   );
 }
 
-export default Tickets;
+export default Requests;

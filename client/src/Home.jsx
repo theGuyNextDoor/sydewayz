@@ -6,14 +6,13 @@ import { useUser } from './UserManager';
 import theme from '../public/theme';
 
 function Home() {
-  const { subscribed } = useUser();
+  const { admin, agent, endUser } = useUser();
 
   return (
-
     <View style={theme.wrapper}>
-      {/* {!subscribed ? (<Login />) : (<Account />)} */}
-      {!subscribed && <Login />}
-      {subscribed && <Account />}
+      {!admin && !endUser && (<Login />)}
+      {admin && <Login />}
+      {endUser && <Account />}
     </View>
   );
 }
