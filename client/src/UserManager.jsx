@@ -31,6 +31,8 @@ export function UserProvider({ children }) {
   };
   const logoutUser = () => {
     setUser({});
+    setAdmin(false);
+    setAgent(false);
     setEndUser(false);
   };
   const showSigninLoading = (bool) => {

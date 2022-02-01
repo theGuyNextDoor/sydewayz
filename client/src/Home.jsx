@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Login from './screens/Login';
+import Admin from './screens/Admin';
 import Account from './screens/Account';
 import { useUser } from './UserManager';
 import theme from '../public/theme';
@@ -11,7 +12,7 @@ function Home() {
   return (
     <View style={theme.wrapper}>
       {!admin && !endUser && (<Login />)}
-      {admin && <Login />}
+      {(admin || agent) && <Admin />}
       {endUser && <Account />}
     </View>
   );

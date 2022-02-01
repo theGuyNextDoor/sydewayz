@@ -4,12 +4,11 @@ const google = require('../../database/googleQueries');
 module.exports = {
   runPostUser: (req, res) => {
     const { email, name, familyName, givenName, photo } = req.body;
-    console.log('MODELS google.js - user from google', req.body); // DELETE ME
     db.query(google.postUser, [name, givenName, familyName, email, photo], (err) => {
       if (err) {
         res.status(201).send('Email already registered, try logging in');
       } else {
-        res.status(201).send('Your account had been submitted for review');
+        res.status(201).send('Your account has been submitted for review');
       }
     });
   },
@@ -36,7 +35,7 @@ module.exports = {
           organization: rows[0].organization,
           zendeskId: rows[0].zendesk_id,
           isAdmin: rows[0].is_admin,
-          userRoleId: rows[0].user_role_id,
+          roleId: rows[0].roles_role_id,
 
         };
         res.status(200).send([profile]);

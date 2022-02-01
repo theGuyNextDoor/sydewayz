@@ -19,9 +19,8 @@ const theme = StyleSheet.create({
     color: '#020033',
     textTransform: 'uppercase',
   },
-  backgroundTxt: {
-    color: '#FFFFFF',
-    textTransform: 'uppercase',
+  view: {
+    backgroundColor: '#26C8D2',
   },
 });
 

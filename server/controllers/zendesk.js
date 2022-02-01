@@ -1,8 +1,8 @@
 const express = require('express');
-const zendesk = require('../models/zendesk');
+const models = require('../models/zendesk');
 
 const router = express.Router();
 
-router.get('/requests/:email', (req, res) => { zendesk.getAllTickets(req, res); });
+router.get('/requests/:email', (req, res) => { models.getAllTickets(req, res); });
 
 module.exports = router;
