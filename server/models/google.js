@@ -21,7 +21,7 @@ module.exports = {
         res.status(400).send(err);
       } else if (!rows.length) {
         res.status(200).send('No account found');
-      } else if (typeof rows[0].zendesk_id !== 'number') {
+      } else if (!rows[0].zendesk_id) {
         res.status(200).send('You account is pending review');
       } else {
         const profile = {
@@ -35,7 +35,7 @@ module.exports = {
           organization: rows[0].organization,
           zendeskId: rows[0].zendesk_id,
           isAdmin: rows[0].is_admin,
-          roleId: rows[0].roles_role_id,
+          roleId: rows[0].roles_id,
 
         };
         res.status(200).send([profile]);

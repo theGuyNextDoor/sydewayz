@@ -2,6 +2,26 @@ const axios = require('axios');
 const { AUTH } = require('../../config');
 
 module.exports = {
+  createUser: (req, res) => {
+    const { body } = req;
+    const options = {
+      method: 'post',
+      baseURL: 'https://clientapi.zendesk.com',
+      url: '/api/v2/users.json',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: AUTH,
+      },
+      data: body,
+    };
+    axios.request(options)
+      .then(({ data }) => {
+        const { id } = data.user;
+        console.log('MODELS ZENDESK', id); // DELETE ME
+        res.status(201).send([id]);
+      })
+      .catch((err) => res.status(401).send(err));
+  },
   getAllTickets: (req, res) => {
     const { email } = req.params;
     const options = {

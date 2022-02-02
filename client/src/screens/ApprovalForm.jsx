@@ -12,7 +12,25 @@ function ApprovalForm({ client }) {
   const { handleMessage } = useUser();
   const { fullName, email, organization } = client;
 
-  const approveUser = () => {};
+  const approveUser = () => {
+    const usrObj = {
+      user: {
+        // custom_role_id: id,
+        name: fullName,
+        email,
+        role: 'end-user',
+        // organization: { name: organization },
+      },
+    };
+    axios.post(`${requestApi}/api/zendesk/createUser`, usrObj)
+      .then(({ data }) => {
+        console.log('SCREENS ApprovalPorm - response:\n', data[0]); // DELETE ME
+        axios.put(`${requestApi}/api/admin/updateId`, { id: data[0], email })
+          .then(() => handleMessage(`${fullName} user verified`))
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
 
   const doNotApproveUser = () => {
     axios.delete(`${requestApi}/api/admin/deleteUser/${email}`)
@@ -32,7 +50,7 @@ function ApprovalForm({ client }) {
       <Text>organization name</Text>
 
       <View style={styles.btnContainer}>
-        <Button title="Approve" />
+        <Button title="Approve" onPress={approveUser} />
         <Button title="Deny" onPress={doNotApproveUser} />
       </View>
     </View>

@@ -25,6 +25,18 @@ module.exports = {
       }
     });
   },
+  runUpdateEndUserZendeskId: (req, res) => {
+    console.log('got here');
+    const { id, email } = req.body;
+    console.log('MODELS admin - id:\n', req.body);
+    db.query(admin.updateEndUserZendeskId, [id, email], (err) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.status(200).send('Updated Zendesk ID');
+      }
+    });
+  },
   runDeleteUser: (req, res) => {
     const { email } = req.params;
     db.query(admin.deleteUser, [email], (err, data) => {

@@ -15,7 +15,6 @@ const requestApi = 'http://localhost:3000'; // TEMPORARY
 function Login() {
   const { loginUser, signinLoading, signupLoading, handleMessage } = useUser();
 
-  // GOOGLE AUTHENTICATION BEGIN
   const handleGoogleSignIn = (action) => {
     const config = {
       webClientId: WEB_CLIENT_ID,
@@ -72,12 +71,12 @@ function Login() {
         console.log(err);
       });
   };
-  // GOOGLE AUTHENTICATION END
 
   return (
     <ImageBackground source={image}>
       <SafeAreaView style={theme.wrapper}>
         <View style={styles.container}>
+
           {/* SIGN IN */}
           {!signinLoading && (
           <TouchableOpacity
