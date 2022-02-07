@@ -1,11 +1,16 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { useUser } from '../UserManager';
 import styles from '../../public/styles/Form';
 import theme from '../../public/theme';
 
-function Form({ handleModalView }) {
+const requestApi = 'http://localhost:3000'; // TEMPORARY
+// ${requestApi} DELETE ALL OCCURANCES
+
+function RequestForm({ handleModalView }) {
+  const [request, setRequest] = useState({});
   const { user } = useUser();
   const {
     control,
@@ -25,7 +30,21 @@ function Form({ handleModalView }) {
       subject: '',
       description: '',
     });
-    console.log('SCREENS Form.js - onSubmit ticket created:\n', data);
+    setRequest({
+      info: {
+        request: {
+          subject: data.subject,
+          comment: {
+            body: data.description,
+          },
+        },
+      },
+      email: user.email,
+    });
+    console.log('SCREENS Form.js - onSubmit request:\n', request);
+    axios.post(`${requestApi}/api/zendesk/createTicket`, request)
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -110,4 +129,4 @@ function Form({ handleModalView }) {
   );
 }
 
-export default Form;
+export default RequestForm;

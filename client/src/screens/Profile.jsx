@@ -3,7 +3,6 @@ import { ImageBackground, Image, View, TouchableOpacity, Text, Modal } from 'rea
 import DatePicker from 'react-native-date-picker';
 import { useUser } from '../UserManager';
 import ReusableModal from './ReusableModal';
-// import Form from './Form';
 import styles from '../../public/styles/Profile';
 import theme from '../../public/theme';
 
@@ -60,7 +59,7 @@ function Profile({ navigation }) {
         {/* INFO */}
         <View style={styles.ticketInfoContainer}>
           <View style={styles.ticketInfo}>
-            <Text>open requests</Text>
+            <Text>pending requests</Text>
             <Text>{openRequests.length}</Text>
           </View>
           <View style={styles.ticketInfo}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Modal, TouchableOpacity, TouchableHighlight, View } from 'react-native';
-import Form from './Form';
+import RequestForm from './RequestForm';
 import ApprovalForm from './ApprovalForm';
 import styles from '../../public/styles/ReusableModal';
 import theme from '../../public/theme';
@@ -13,7 +13,7 @@ function ReusableModal({ openModal, client }) {
     >
       <TouchableOpacity style={styles.wrapper} onPress={() => openModal(client)}>
         <TouchableHighlight style={styles.container}>
-          {client ? <ApprovalForm client={client} /> : <Form />}
+          {client ? <ApprovalForm client={client} /> : <RequestForm />}
         </TouchableHighlight>
       </TouchableOpacity>
     </Modal>

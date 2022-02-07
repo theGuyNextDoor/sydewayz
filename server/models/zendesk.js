@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { AUTH } = require('../../config');
+const { AUTH, TOKEN } = require('../../config');
 
 module.exports = {
   createUser: (req, res) => {
@@ -19,6 +19,28 @@ module.exports = {
         const { id } = data.user;
         console.log('MODELS ZENDESK', id); // DELETE ME
         res.status(201).send([id]);
+      })
+      .catch((err) => res.status(401).send(err));
+  },
+  createTicket: (req, res) => {
+    const { body } = req;
+    const { email, info } = body;
+
+    console.log('MODELS ZENDESK - got here:\n', body.info); // DELETE ME
+    const options = {
+      method: 'post',
+      baseURL: 'https://clientapi.zendesk.com',
+      url: '/api/v2/requests',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${email}/token:${TOKEN}`,
+      },
+      data: info,
+    };
+    axios.request(options)
+      .then(({ data }) => {
+        console.log('MODELS ZENDESK response', data); // DELETE ME
+        // res.status(201).send();
       })
       .catch((err) => res.status(401).send(err));
   },
