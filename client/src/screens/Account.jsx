@@ -36,7 +36,7 @@ function Account() {
           console.log(err);
         });
     }
-  }, [user]); // MAY NEED TO CHANGE FOR TICKET REFRESH
+  }, [user]);
 
   return (
     <NavigationContainer>

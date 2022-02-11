@@ -6,7 +6,7 @@ module.exports = {
     const { body } = req;
     const options = {
       method: 'post',
-      baseURL: 'https://clientapi.zendesk.com',
+      baseURL: 'https://sdkinstall.zendesk.com',
       url: '/api/v2/users.json',
       headers: {
         'Content-Type': 'application/json',
@@ -17,30 +17,36 @@ module.exports = {
     axios.request(options)
       .then(({ data }) => {
         const { id } = data.user;
-        console.log('MODELS ZENDESK', id); // DELETE ME
         res.status(201).send([id]);
       })
       .catch((err) => res.status(401).send(err));
   },
   createTicket: (req, res) => {
-    const { body } = req;
-    const { email, info } = body;
-
-    console.log('MODELS ZENDESK - got here:\n', body.info); // DELETE ME
+    const { email, subject, description } = req.body;
     const options = {
       method: 'post',
-      baseURL: 'https://clientapi.zendesk.com',
+      baseURL: 'https://sdkinstall.zendesk.com',
       url: '/api/v2/requests',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Basic ${email}/token:${TOKEN}`,
       },
-      data: info,
+      auth: {
+        username: `${email}/token`,
+        password: TOKEN,
+      },
+      data: {
+        request: {
+          subject,
+          comment: { body: description },
+        },
+      },
     };
     axios.request(options)
       .then(({ data }) => {
-        console.log('MODELS ZENDESK response', data); // DELETE ME
-        // res.status(201).send();
+        // const {  } = data.request;
+        console.log(data.request);
+
+        // res.status(201).send(data);
       })
       .catch((err) => res.status(401).send(err));
   },
@@ -48,7 +54,7 @@ module.exports = {
     const { email } = req.params;
     const options = {
       method: 'get',
-      baseURL: 'https://clientapi.zendesk.com',
+      baseURL: 'https://sdkinstall.zendesk.com',
       url: '/api/v2/tickets.json',
       headers: {
         'Content-Type': 'application/json',

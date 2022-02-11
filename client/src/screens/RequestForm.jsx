@@ -10,6 +10,7 @@ const requestApi = 'http://localhost:3000'; // TEMPORARY
 // ${requestApi} DELETE ALL OCCURANCES
 
 function RequestForm({ handleModalView }) {
+  const { allRequests, setAllRequests } = useUser();
   const [request, setRequest] = useState({});
   const { user } = useUser();
   const {
@@ -30,20 +31,14 @@ function RequestForm({ handleModalView }) {
       subject: '',
       description: '',
     });
-    setRequest({
-      info: {
-        request: {
-          subject: data.subject,
-          comment: {
-            body: data.description,
-          },
-        },
-      },
-      email: user.email,
-    });
-    console.log('SCREENS Form.js - onSubmit request:\n', request);
-    axios.post(`${requestApi}/api/zendesk/createTicket`, request)
-      .then((response) => console.log(response))
+    axios.post(`${requestApi}/api/zendesk/createTicket`, data)
+      .then(({ data }) => {
+        // const { id, created_at, subject, description, status, priority } = data.request;
+
+        console.log(data);
+
+        // setAllRequests([...allRequests, data]);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -112,13 +107,9 @@ function RequestForm({ handleModalView }) {
           <Button
             title="Clear"
             onPress={() => {
-              reset({
-                subject: '',
-                description: '',
-              });
+              reset({ subject: '', description: '' });
             }}
           />
-
           <Button
             title="Submit"
             onPress={handleSubmit(onSubmit)}
