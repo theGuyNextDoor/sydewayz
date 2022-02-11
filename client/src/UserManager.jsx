@@ -54,6 +54,10 @@ export function UserProvider({ children }) {
       setAllRequests(requestArr);
     }
   };
+  const addRequest = (request) => {
+    setAllRequests([...allRequests, request]);
+    setOpenRequests([...openRequests, request]);
+  };
 
   return (
     <UserContext.Provider value={{
@@ -76,6 +80,7 @@ export function UserProvider({ children }) {
       openRequests,
       closedRequests,
       makeRequests,
+      addRequest,
     }}>
       {children}
     </UserContext.Provider>

@@ -59,10 +59,7 @@ module.exports = {
           organizationId: data.request.organization_id,
           userCanSolve: data.request.can_be_solved_by_me,
         };
-
-        console.log(requestData);
-
-        // res.status(201).send(requestData);
+        res.status(201).send(requestData);
       })
       .catch((err) => res.status(401).send(err));
   },

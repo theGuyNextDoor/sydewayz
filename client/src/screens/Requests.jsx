@@ -10,10 +10,25 @@ function Requests({ navigation }) {
   const { allRequests } = useUser();
 
   const requests = allRequests.map((request, index) => {
-    const { id, subject, description, status, priority } = request;
+    const {
+      id,
+      userId, // MAY DELETE
+      recipient, // MAY DELETE
+
+      subject,
+      description,
+      status,
+      priority,
+      createdAt,
+      updatedAt,
+      due,
+
+      organizationId,
+      userCanSolve,
+    } = request;
 
     return (
-      <View key={index} style={styles.requestContainer}>
+      <View key={id} style={styles.requestContainer}>
         <View style={styles.statusContainer}>
           <Text style={styles.status}>
             status:   {status}

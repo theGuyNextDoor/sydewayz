@@ -10,7 +10,7 @@ const requestApi = 'http://localhost:3000'; // TEMPORARY
 // ${requestApi} DELETE ALL OCCURANCES
 
 function RequestForm({ handleModalView }) {
-  const { allRequests, setAllRequests } = useUser();
+  const { addRequest } = useUser();
   const [request, setRequest] = useState({});
   const { user } = useUser();
   const {
@@ -33,11 +33,7 @@ function RequestForm({ handleModalView }) {
     });
     axios.post(`${requestApi}/api/zendesk/createRequest`, data)
       .then(({ data }) => {
-        // const { id, created_at, subject, description, status, priority } = data.request;
-
-        console.log(data);
-
-        // setAllRequests([...allRequests, data]);
+        addRequest(data);
       })
       .catch((err) => console.log(err));
   };
