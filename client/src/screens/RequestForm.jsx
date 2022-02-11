@@ -31,7 +31,7 @@ function RequestForm({ handleModalView }) {
       subject: '',
       description: '',
     });
-    axios.post(`${requestApi}/api/zendesk/createTicket`, data)
+    axios.post(`${requestApi}/api/zendesk/createRequest`, data)
       .then(({ data }) => {
         // const { id, created_at, subject, description, status, priority } = data.request;
 

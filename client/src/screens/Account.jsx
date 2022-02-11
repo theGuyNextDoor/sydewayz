@@ -18,7 +18,7 @@ function Account() {
 
   useEffect(() => {
     if (Object.keys(user).length) {
-      axios.get(`${requestApi}/api/zendesk/requests/${user.email}`)
+      axios.get(`${requestApi}/api/zendesk/requests/${user.zendeskId}/${user.email}`)
         .then(({ data }) => {
           data.forEach((item) => {
             if (item.status === 'closed') {

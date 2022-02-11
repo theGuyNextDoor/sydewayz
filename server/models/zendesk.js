@@ -21,7 +21,7 @@ module.exports = {
       })
       .catch((err) => res.status(401).send(err));
   },
-  createTicket: (req, res) => {
+  createRequest: (req, res) => {
     const { email, subject, description } = req.body;
     const options = {
       method: 'post',
@@ -43,48 +43,64 @@ module.exports = {
     };
     axios.request(options)
       .then(({ data }) => {
-        // const {  } = data.request;
-        console.log(data.request);
+        const requestData = {
+          id: data.request.id,
+          userId: data.request.requester_id, // MAY DELETE
+          recipient: data.request.recipient, // MAY DELETE
 
-        // res.status(201).send(data);
+          subject: data.request.subject,
+          description: data.request.description,
+          status: data.request.status,
+          priority: data.request.priority,
+          createdAt: data.request.created_at,
+          updatedAt: data.request.updated_at,
+          due: data.request.due_at,
+
+          organizationId: data.request.organization_id,
+          userCanSolve: data.request.can_be_solved_by_me,
+        };
+
+        console.log(requestData);
+
+        // res.status(201).send(requestData);
       })
       .catch((err) => res.status(401).send(err));
   },
-  getAllTickets: (req, res) => {
-    const { email } = req.params;
+  getRequests: (req, res) => {
+    const { zendeskId, email } = req.params;
     const options = {
       method: 'get',
       baseURL: 'https://sdkinstall.zendesk.com',
-      url: '/api/v2/tickets.json',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: AUTH,
-      },
+      url: `/api/v2/users/${zendeskId}/requests.json`,
+      headers: { 'Content-Type': 'application/json' },
+      auth: { username: `${email}/token`, password: TOKEN },
     };
     axios.request(options)
       .then(({ data }) => {
-        const { tickets } = data;
-        let ticketArr = [];
+        const { requests } = data;
+        let requestArr = [];
 
-        // NEEDED TO FILTER UNIQUE USER TICKETS
-        const userSpecificTickets = tickets.filter((ticket) => ticket.recipient === email && ticket.status === 'open');
+        requests.forEach((request) => {
+          const requestData = {
+            id: request.id,
+            userId: request.requester_id, // MAY DELETE
+            recipient: request.recipient, // MAY DELETE
 
-        // userSpecificTickets.forEach((ticket) => { //ADD ME
-        tickets.forEach((ticket) => { //DELETE ME
-          const { recipient, type, subject, description, priority, status, created_at } = ticket;
+            subject: request.subject,
+            description: request.description,
+            status: request.status,
+            priority: request.priority,
+            createdAt: request.created_at,
+            updatedAt: request.updated_at,
+            due: request.due_at,
 
-          const ticketData = {
-            recipient,
-            createdAt: created_at,
-            type,
-            subject,
-            description,
-            priority,
-            status,
+            organizationId: request.organization_id,
+            userCanSolve: request.can_be_solved_by_me,
           };
-          ticketArr = [...ticketArr, ticketData];
+
+          requestArr = [...requestArr, requestData];
         });
-        res.status(200).send(ticketArr);
+        res.status(200).send(requestArr);
       })
       .catch((err) => {
         res.status(500).send(err);
