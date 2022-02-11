@@ -50,7 +50,8 @@ function Requests({ navigation }) {
   return (
     <ImageBackground source={image}>
       <View style={theme.container}>
-        <ScrollView>
+        {/* <ScrollView contentContainerStyle={{ flexGrow: 1 }}> */}
+        <ScrollView style={{ height: '100%' }}>
           {requests}
         </ScrollView>
       </View>

@@ -5,12 +5,14 @@ const styles = StyleSheet.create({
     width: '90%',
     borderRadius: 10,
     padding: '5%',
+    marginBottom: '3%',
     backgroundColor: '#26C8D2',
   },
   statusContainer: {
     flexDirection: 'row-reverse',
   },
   messageContainer: {
+    flex: 1,
     alignItems: 'center',
   },
   status: {
@@ -21,7 +23,6 @@ const styles = StyleSheet.create({
     paddingBottom: '5%',
   },
   description: {
-
   },
 });
 
