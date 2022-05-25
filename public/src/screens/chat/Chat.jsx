@@ -16,35 +16,22 @@ const data = [
   { type: 'agent', name:'agent', message: 'can i help you' },
   { type: 'customer', name: 'rcpt', message: 'yes you can' },
   { type: 'agent', name: 'agent', message: 'can i help you' },
-  { type: 'customer', name: 'rcpt', message: 'yes you can' },
-  { type: 'agent', name:'agent', message: 'can i help you' },
-  { type: 'customer', name: 'rcpt', message: 'yes you can' },
-  { type: 'agent', name:'agent', message: 'can i help you' },
-  { type: 'customer', name: 'rcpt', message: 'yes you can' },
-  { type: 'agent', name: 'agent', message: 'can i help you' },
-  { type: 'customer', name: 'rcpt', message: 'yes you can' },
-  { type: 'agent', name:'agent', message: 'can i help you' },
-  { type: 'customer', name: 'rcpt', message: 'yes you can' },
-  { type: 'agent', name:'agent', message: 'can i help you' },
   { type: 'customer', name: 'rcpt', message: 'end' },
 ];
 
 const styles = StyleSheet.create({
-  wrapper: { flex: 1, paddingLeft: 20, paddingRight: 20, paddingTop: 10 },
-  feedBox: { flex: 1, padding: 10, borderWidth: 1, marginBottom: 20 },
-  rcptBox: { width: '100%', marginBottom: 20, },
-  innerRcptBox: { maxWidth: '75%', borderWidth: 1, padding: 5 },
+  wrapper: { flex: 1, paddingLeft: 20, paddingRight: 20, paddingBottom: 20 },
+  feedBox: { flex: 1, marginBottom: 10 },
+  rcptBox: { width: '75%', marginBottom: 20 },
+  innerRcptBox: { borderWidth: 1, padding: 5, borderRadius: 10 },
   senderBox: { width: '100%', alignItems: 'flex-end', marginBottom: 20 },
-  innerSenderBox: { maxWidth: '75%', borderWidth: 1, alignItems: 'flex-end', padding: 5 },
-  messageBox: { width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 20},
+  innerSenderBox: { maxWidth: '75%', borderWidth: 1, alignItems: 'flex-end', padding: 5, borderRadius: 10 },
+  messageBox: { width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
   txtInput: { flex: 1 },
 });
 
 function Chat() {
   const [text, setText] = useState('');
-  const [iosViewHeight, setIosViewHeight] = useState(0);
-  Keyboard.addListener('keyboardDidShow', (event) => setIosViewHeight(event.endCoordinates.height));
-  Keyboard.addListener('keyboardDidHide', () => setIosViewHeight(0));
 
   const feed = data.map((item, index) => {
     const { type, name, message } = item;
@@ -53,8 +40,8 @@ function Chat() {
         <View key={index} style={styles.rcptBox}>
           <View style={styles.innerRcptBox}>
             <Text>{message}</Text>
-            <Text>{name}</Text>
           </View>
+          <Text>{name}</Text>
         </View>
       );
     }
@@ -63,7 +50,6 @@ function Chat() {
       <View key={index} style={styles.senderBox}>
         <View style={styles.innerSenderBox}>
           <Text>{message}</Text>
-          <Text>{name}</Text>
         </View>
       </View>
     );

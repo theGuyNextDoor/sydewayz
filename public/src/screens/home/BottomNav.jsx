@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { BottomNavigation } from 'react-native-paper';
-import Home from './Home';
+import Appointment from './Appointment';
 import Requests from './Requests';
+import Call from './Call';
 
 function LeagueNav({ route }) {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'Home', title: 'Home', icon: 'home' },
+    { key: 'Appointment', title: 'Appointment', icon: 'calendar-clock' },
+    { key: 'Call', title: 'Calls', icon: 'phone-hangup' },
     { key: 'Requests', title: 'Requests', icon: 'ticket' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    Home,
+    Appointment,
+    Call,
     Requests,
   });
 

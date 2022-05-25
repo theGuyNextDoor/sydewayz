@@ -1,9 +1,10 @@
+import axios from 'axios';
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Title, Text, Button, Card } from 'react-native-paper';
 
 const styles = StyleSheet.create({
-  wrapper: { paddingTop: '5%', paddingRight: '10%', paddingLeft: '10%' },
+  wrapper: { flex: 1, paddingTop: '5%', paddingRight: '10%', paddingLeft: '10%' },
   btnBox: { marginBottom: 10, width: '100%', alignItems: 'flex-start' },
   scroll: { borderTopWidth: 1 },
   requestBox: { padding: 10, borderWidth: 1, marginBottom: 20 },
@@ -23,7 +24,7 @@ const data = [
 ];
 
 function Requests() {
-  const requests = data.map((item, index) => {
+  const feed = data.map((item, index) => {
     const { title, desctiption } = item;
 
     return (
@@ -41,11 +42,12 @@ function Requests() {
   return (
     <View style={styles.wrapper}>
       <View style={styles.btnBox}>
-        <Button mode="contained">Create a request</Button>
+        <Button mode="text">Submit a request</Button>
       </View>
 
       <ScrollView>
-        {requests}
+        {feed}
+        {feed.length ? (<Title>You&#39;ve reached the end of the list</Title>) : (<Title>No Requests</Title>)}
       </ScrollView>
     </View>
   );
