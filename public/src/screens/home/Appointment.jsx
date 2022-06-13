@@ -1,6 +1,9 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { StyleSheet, View, ScrollView, Linking } from 'react-native';
 import { Title, Text, Button, Card } from 'react-native-paper';
+import DOMAIN from '../../domain';
 
 const styles = StyleSheet.create({
   wrapper: { flex: 1, paddingTop: '5%', paddingRight: '10%', paddingLeft: '10%' },
@@ -11,31 +14,38 @@ const styles = StyleSheet.create({
   cancel: { alignItems: 'flex-end' },
 });
 
-const data = [
-  // { startTime: 'some time', endTime: ' some time after' },
-  // { startTime: 'some time', endTime: ' some time after' },
-];
-
 function Appointment() {
-  let feed = [];
+  const { calendly } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  let scheduleFeed = [];
+  let callFeed = [];
+  const email = 'johndoe@gmail.com';
 
-  const openURL = () => {
-    Linking.openURL('https://calendly.com/raeyejordan/sydeways')
+  const openScheduleURL = () => {
+    Linking.openURL('https://calendly.com/raeyejordan/sydeways') // change endpoint
+    .catch(err => console.log('Can not open'));
+  };
+
+  const openCallURL = () => {
+    Linking.openURL('https://calendly.com/raeyejordan/sydeways') // change endpoint
     .catch(err => console.log('Can not open'));
   };
 
   useEffect(() => {
-
+    axios.get(`${DOMAIN}/calendly/appointments/${email}`)
+      .then(({ data }) => dispatch({ type: 'stageAppointments', payload: data.collection}))
+      .catch((err) => console.log(err)); // make snackbar
   }, []);
 
-  if (data.length) {
-    feed = data.map((item, index) => {
-      const { startTime, endTime } = item;
+  if (calendly.appointments) {
+    scheduleFeed = calendly.appointments.map((item, index) => {
+      const { name, location, start_time, end_time } = item;
 
       return (
         <View key={index} style={styles.requestBox}>
-          <Title>{startTime}</Title>
-          <Text>{endTime}</Text>
+          <Title>{name}</Title>
+          <Text>{start_time}</Text>
+          <Text>{end_time}</Text>
           <View style={styles.cancel}>
             <Text>Cancel</Text>
           </View>
@@ -44,15 +54,24 @@ function Appointment() {
     });
   }
 
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.btnBox}>
-        <Button mode="text" onPress={openURL}>Schedule An Appointment</Button>
+        <Button mode="text" onPress={openScheduleURL}>Schedule An Appointment</Button>
       </View>
 
-      <ScrollView>
-        {feed}
-        {feed.length ? (<Title>You&#39;ve reached the end of the list</Title>) : (<Title>No Appointments Scheduled</Title>)}
+      <ScrollView style={{ flex: 1 }}>
+        {scheduleFeed}
+        {scheduleFeed.length === 0 && <Title>No Appointments Scheduled</Title>}
+      </ScrollView>
+
+      <View style={styles.btnBox}>
+        <Button mode="text" onPress={openCallURL}>Schedule A Call</Button>
+      </View>
+      <ScrollView style={{ flex: 1 }}>
+        {callFeed}
+        {callFeed.length === 0 && <Title>No Calls Scheduled</Title>}
       </ScrollView>
     </View>
   );

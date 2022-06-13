@@ -1,20 +1,24 @@
+import axios from 'axios';
+import { authorize } from 'react-native-app-auth';
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BottomNavigation } from 'react-native-paper';
 import Appointment from './Appointment';
 import Requests from './Requests';
-import Call from './Call';
+import DOMAIN from '../../domain';
 
 function LeagueNav({ route }) {
+  const dispatch = useDispatch();
+  const authenticated = useSelector((state) => state.authenticated);
+
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'Appointment', title: 'Appointment', icon: 'calendar-clock' },
-    { key: 'Call', title: 'Calls', icon: 'phone-hangup' },
     { key: 'Requests', title: 'Requests', icon: 'ticket' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     Appointment,
-    Call,
     Requests,
   });
 

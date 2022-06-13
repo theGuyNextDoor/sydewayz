@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Title, Text, Button, Card } from 'react-native-paper';
+import { orgID, appID, dataCenter as dc } from '../../../../config';
 
 const styles = StyleSheet.create({
   wrapper: { flex: 1, paddingTop: '5%', paddingRight: '10%', paddingLeft: '10%' },
@@ -24,6 +25,7 @@ const data = [
 ];
 
 function Requests() {
+
   const feed = data.map((item, index) => {
     const { title, desctiption } = item;
 
